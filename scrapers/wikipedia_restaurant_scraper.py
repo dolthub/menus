@@ -7,7 +7,7 @@ import doltcli
 URL = 'https://en.wikipedia.org/wiki/List_of_restaurant_chains_in_the_United_States'
 page = requests.get(URL)
 soup = BeautifulSoup(page.content, 'html.parser')
-db = doltcli.Dolt(".")
+db = doltcli.Dolt("../../../")
 
 tables = soup.find_all("table", class_="wikitable")
 rows = soup.select("table.wikitable tbody tr td:first-of-type")
@@ -47,4 +47,4 @@ with open("restaurants.csv", "w", newline='') as csvfile:
                 # db.sql(query, result_format="json")
 
 
-# db.table_import("restaurants", "restaurants.csv", False, True, False, None, ["id"], False, "csv", False)
+db.table_import("restaurants", "restaurants.csv", False, True, False, None, ["id"], False, "csv", False)
