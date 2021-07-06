@@ -11,14 +11,6 @@ db = doltcli.Dolt("../../../")
 menuCategories = ["burgers & sandwhiches", "wraps","chicken","salads","breakfast","sides","drinks"]
 
 items = soup.find_all("td", class_="column-1")
-calories = soup.find_all("td", class_="column-2")
-fat = soup.find_all("td", class_="column-3")
-cholesterol = soup.find_all("td", class_="column-4")
-carbs = soup.find_all("td", class_="column-5")
-fiber = soup.find_all("td", class_="column-6")
-sugars = soup.find_all("td", class_="column-7")
-protein = soup.find_all("td", class_="column-8")
-filteredItems = []
 
 def itemIsCategory(item):
     for category in menuCategories:
@@ -67,7 +59,6 @@ def getNutritionalInfo(item, columnNum):
 def buildRows():
     rows = []
     for item in items:
-        # build cell data
         name = getName(item)
         skip = itemIsCategory(name)        
         if skip == True:
