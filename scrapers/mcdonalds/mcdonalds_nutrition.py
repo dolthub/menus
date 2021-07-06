@@ -90,4 +90,3 @@ def buildRows():
 
 rows = buildRows()
 doltcli.write_rows(db, "menu_items", rows)
-
