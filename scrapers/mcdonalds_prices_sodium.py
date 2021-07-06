@@ -9,7 +9,7 @@ db = doltcli.Dolt("../../../")
 
 tableRows = soup.find_all("tr")
 
-def scrapePrices():
+def scrapePricesAndSodium():
     res = []
     for r in tableRows:
         tds = r.find_all("td")
@@ -45,5 +45,5 @@ def scrapePrices():
                         res.append(rows)
     return res
 
-rowsWithPrice = scrapePrices()
+rowsWithPrice = scrapePricesAndSodium()
 doltcli.write_rows(db, "menu_items", rowsWithPrice, "update")
