@@ -47,9 +47,17 @@ def getCalories(item):
 
 
 def getName(item):
-    text = item.getText()
-    formattedText = text.replace('\n', ' ').replace("<br/>", "")
-    return formattedText
+    return item.getText().replace('\n', ' ').replace("<br/>", "")
+
+def getFatG(item):
+    fatTd = item.nextSibling.nextSibling.next_element.string
+    fatTdString = str(fatTd)
+    fat = ""
+    if fatTdString != "None":
+        fat = fatTdString.replace("g", "")
+    if str(fatTdString) == "None":
+        fat = str(item.nextSibling.nextSibling.next_element["value"])
+    return fat.replace(" ", "")
 
 
 def buildRows():
@@ -57,18 +65,20 @@ def buildRows():
     for item in items:
         # build cell data
         name = getName(item)
-        calories = getCalories(item)
-
-        # skip category/header rows
         skip = itemIsCategory(name)        
         if skip == True:
             continue
         else:
+            calories = getCalories(item)
+            fat = getFatG(item)
+
+            # skip category/header rows
             itemDict = {
                 "name": name,
                 "restaurant_name": "McDonald's",
                 "identifier": "National",
-                "calories": calories
+                "calories": calories,
+                "fat(g)": fat
             }
             rows.append(itemDict)
     return rows
@@ -78,3 +88,4 @@ rows = buildRows()
 print(rows)
 
 doltcli.write_rows(db, "menu_items", rows)
+
