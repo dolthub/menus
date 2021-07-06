@@ -30,86 +30,38 @@ def itemIsCategory(item):
             continue
     return False
 
-def getCalories(item):
-    calTd = item.nextSibling.string
-    cal = str(calTd)
-    
-    # There is a small subset of td's with elements as children
-    if cal == "None":
-        contents = item.nextSibling.contents
-        # The first child for these contents stores the calories in the 'value' attribute
-        if len(contents) == 2:
-            cal = contents[0]["value"]
-            # The first child is a string of the calorie value
-        if len(contents) == 3:
-            cal = contents[0]
-
-    # Remove any trailing spaces
-    return cal.replace(" ", "")
-
-
 def getName(item):
     return item.getText().replace('\n', ' ').replace("<br/>", "")
 
-def getFatG(item):
-    fatTd = item.nextSibling.nextSibling.next_element.string
-    fatTdString = str(fatTd)
-    fat = ""
-    if fatTdString != "None":
-        fat = fatTdString.replace("g", "")
-    if str(fatTdString) == "None":
-        fat = str(item.nextSibling.nextSibling.next_element["value"])
-    return fat.replace(" ", "")
+def getNutritionalInfo(item, columnNum):
+    td = ""
+    # calories
+    if columnNum == 1:
+        td = item.nextSibling.next_element
+    # fat
+    if columnNum == 2: 
+        td = item.nextSibling.nextSibling.next_element
+    # cholesterol
+    if columnNum == 3: 
+        td = item.nextSibling.nextSibling.nextSibling.next_element
+    # carbs
+    if columnNum == 4: 
+        td = item.nextSibling.nextSibling.nextSibling.nextSibling.next_element
+    # fiber
+    if columnNum == 5: 
+        td = item.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.next_element
+    # sugars
+    if columnNum == 6: 
+        td = item.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.next_element
+    # protein
+    if columnNum == 7: 
+        td = item.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.next_element
 
-def getCholesterol(item):
-    cholTd = item.nextSibling.nextSibling.nextSibling.next_element.string
-    cholTdString = str(cholTd)
-    cholesterol = ""
-    if cholTdString != "None":
-        cholesterol = cholTdString.replace("mg", "")
-    if str(cholTdString) == "None":
-        cholesterol = str(item.nextSibling.nextSibling.nextSibling.next_element["value"])
-    return cholesterol.replace(" ", "")
+    res = str(td.string)
+    if res == "None":
+        res = td["value"]
 
-def getCarbs(item):
-    carbTd = item.nextSibling.nextSibling.nextSibling.nextSibling.next_element.string
-    carbTdString = str(carbTd)
-    carb = ""
-    if carbTdString != "None":
-        carb = carbTdString.replace("g", "")
-    if str(carbTdString) == "None":
-        carb = str(item.nextSibling.nextSibling.nextSibling.nextSibling.next_element["value"])
-    return carb.replace(" ", "")
-
-def getFiber(item):
-    carbTd = item.nextSibling.nextSibling.nextSibling.nextSibling.next_sibling.next_element.string
-    carbTdString = str(carbTd)
-    carb = ""
-    if carbTdString != "None":
-        carb = carbTdString.replace("g", "")
-    if str(carbTdString) == "None":
-        carb = str(item.nextSibling.nextSibling.nextSibling.nextSibling.next_sibling.next_element["value"])
-    return carb.replace(" ", "")
-
-def getSugar(item):
-    carbTd = item.nextSibling.nextSibling.nextSibling.nextSibling.next_sibling.next_sibling.next_element.string
-    carbTdString = str(carbTd)
-    carb = ""
-    if carbTdString != "None":
-        carb = carbTdString.replace("g", "")
-    if str(carbTdString) == "None":
-        carb = str(item.nextSibling.nextSibling.nextSibling.nextSibling.next_sibling.next_sibling.next_element["value"])
-    return carb.replace(" ", "")
-
-def getProtein(item):
-    carbTd = item.nextSibling.nextSibling.nextSibling.nextSibling.next_sibling.next_sibling.next_sibling.next_element.string
-    carbTdString = str(carbTd)
-    carb = ""
-    if carbTdString != "None":
-        carb = carbTdString.replace("g", "")
-    if str(carbTdString) == "None":
-        carb = str(item.nextSibling.nextSibling.nextSibling.nextSibling.next_sibling.next_sibling.next_sibling.next_element["value"])
-    return carb.replace(" ", "")
+    return res.replace(" ", "").replace("mg", "").replace("g", "").replace(" ", "")
 
 
 def buildRows():
@@ -121,15 +73,14 @@ def buildRows():
         if skip == True:
             continue
         else:
-            calories = getCalories(item)
-            fat = getFatG(item)
-            cholesterol = getCholesterol(item)
-            carbs = getCarbs(item)
-            fiber = getFiber(item)
-            sugar = getSugar(item)
-            protein = getProtein(item)
+            calories = getNutritionalInfo(item, 1)
+            fat = getNutritionalInfo(item, 2)
+            cholesterol = getNutritionalInfo(item, 3)
+            carbs = getNutritionalInfo(item, 4)
+            fiber = getNutritionalInfo(item, 5)
+            sugar = getNutritionalInfo(item, 6)
+            protein = getNutritionalInfo(item, 7)
 
-            # skip category/header rows
             itemDict = {
                 "name": name,
                 "restaurant_name": "McDonald's",
@@ -147,7 +98,5 @@ def buildRows():
 
 
 rows = buildRows()
-# print(rows)
-
 doltcli.write_rows(db, "menu_items", rows)
 
