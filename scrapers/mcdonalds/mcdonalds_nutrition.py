@@ -75,7 +75,7 @@ def buildRows():
             itemDict = {
                 "name": name,
                 "restaurant_name": "McDonald's",
-                "identifier": "National",
+                "identifier": "NATIONAL",
                 "calories": calories,
                 "fat(g)": fat,
                 "cholesterol(mg)": cholesterol,

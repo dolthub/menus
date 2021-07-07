@@ -27,8 +27,8 @@ def validateRestaurantName(db, row):
     print(f'\nmenu_item.restaurant_name "{name!r} was stripped of leading or trailing spaces. Please commit these changes.')
 
 def validateIdentifier(identifier):
-  if identifier == "National":
+  if identifier == "NATIONAL":
     return
   if "," not in identifier:
-    print(f'\nmenu_item.identifier "{identifier!r} must be equal to "National", or in the format of <city>, <state>.\nExample: Santa Monica, CA\nIf the menu items are statewide, use NULL, <state>')
+    print(f'\nmenu_item.identifier "{identifier!r} must be equal to "NATIONAL", or in the format of <city>, <state>.\nExample: Santa Monica, CA\nIf the menu items are statewide, use NULL, <state>')
 
