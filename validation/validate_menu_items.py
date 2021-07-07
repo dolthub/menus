@@ -3,7 +3,8 @@ from validate_nutrition import *
 import doltcli
 from validate_pks import *
 
-db = doltcli.Dolt("../../../menus/menus/menus")
+relative_path_to_dolt_directory = "FILL ME IN"
+db = doltcli.Dolt(relative_path_to_dolt_directory)
 
 def validatePks(row):
     validateName(row["name"])
