@@ -1,20 +1,20 @@
 
-from validate_nutrition import validateNoUnitsInCells
+from validate_nutrition import *
 import doltcli
 from validate_pks import *
 
-db = doltcli.Dolt("../../../")
+db = doltcli.Dolt("../../../menus/menus/menus")
 
-def validatePks(db, row):
-    validateName(db, row)
-    validateRestaurantName(db, row)
+def validatePks(row):
+    validateName(row["name"])
+    validateRestaurantName(row["restaurant_name"])
     validateIdentifier(row["identifier"])
 
 
 def main():
   rows = doltcli.read_rows_sql(db, "SELECT * FROM menu_items")
   for row in rows:
-    validatePks(db, row)
+    validatePks(row)
     validateNoUnitsInCells(db, row)
 
 main()
