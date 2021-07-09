@@ -1,4 +1,5 @@
-def stringHasLeadingOrTrailingSpace(s):
+def stringPassesLeadingTrailingSpaceCheck(s):
     if s == "":
         return False
-    return s.split()[0] == s
+    stripped = s.strip()
+    return stripped == s
