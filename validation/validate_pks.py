@@ -32,3 +32,10 @@ def validateIdentifier(identifier):
     print(f'\nmenu_item.identifier "{identifier!r} has leading or trailing spaces. Run the following SQL command to make corrections:\n')
     print(f'UPDATE menu_items SET restaurant_name = {stripped!r} WHERE restaurant_name = {identifier!r}')
     print(f'DELETE FROM menu_items WHERE name = {identifier!r}')
+
+def validatePks(row):
+    validateName(row["name"])
+    validateRestaurantName(row["restaurant_name"])
+    validateIdentifier(row["identifier"])
+
+    
