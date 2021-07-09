@@ -1,5 +1,6 @@
 from utils.strings import *
 from utils.print import *
+from static import *
 
 
 def validateName(name):
@@ -25,16 +26,21 @@ def validatePkIsUppercase(colName, value):
   
 def validatePkHasNoLeadingTrailingSpaces(colName, value):
     if stringPassesLeadingTrailingSpaceCheck(value) is not True:
-      printLeadingTrailingSpaceMsg(colName, value)
+      printLeadingTrailingSpaceCorrectionPrompt(colName, value)
     if stringIsUppercase(value) is not True:
       printUppercaseCorrectionPrompt(colName, value)
 
+def validateNoInvalidChars(colName, value):
+  for char in invalid_chars:
+    if char in value:
+      printInvalidCharCorrectionPrompt(colName, value, char)
+
 
 def validateCommonPkFormat(row):
-  pks = ["name", "restaurant_name", "identifier"]
-  for pk in pks:
+  for pk in menus_primary_keys:
     validatePkIsUppercase(pk, row[pk])
     validatePkHasNoLeadingTrailingSpaces(pk, row[pk])
+    validateNoInvalidChars(pk, row[pk])
 
 
 def validatePks(row):
