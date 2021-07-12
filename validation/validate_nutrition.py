@@ -6,7 +6,6 @@ def validateNoUnitsInCells(row):
         value = row[fieldName]
         stripped = value.replace("mg", "").replace("g", "").replace("(", "").replace(")","").strip()
         if stripped != value:
-            print(f'\nmenu_item.{field!r} "{value!r} cannot have leading or trailing spaces, units, and/or parentheses. Please run the following SQL command to make corrections:\n')
             print(f'UPDATE menu_items SET name={stripped!r} WHERE name = {value!r}')
             print(f"DELETE FROM menu_items WHERE name = {value!r}")
 
