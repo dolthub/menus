@@ -1,6 +1,4 @@
-from utils.print import *
 from static import *
-
 
 def stringPassesLeadingTrailingSpaceCheck(s):
     if s == "":
@@ -12,10 +10,9 @@ def stringIsUppercase(s):
     return s.upper() == s
 
 def validateString(colName, value):
-    if stringPassesLeadingTrailingSpaceCheck(value) is not True:
-      printInvalidSpace(colName, value)
-    if stringIsUppercase(value) is not True:
-      printInvalidUppercase(colName, value)
+    formatted = value.strip().upper()
     for char in invalid_chars:
-      if char in value:
-        printInvalidChar(colName, value, char)
+        formatted = formatted.replace(char, " ").replace("  ", " ")
+    if formatted != value:
+        print(f'UPDATE menu_items SET {colName!r} = {formatted!r} WHERE restaurant_name = {value!r}')
+        print(f'DELETE FROM menu_items WHERE {colName!r} = {value!r}')

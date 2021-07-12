@@ -1,5 +1,4 @@
 from utils.strings import *
-from utils.print import *
 from static import *
 
 
@@ -7,7 +6,6 @@ def validateName(name):
   if len(name) < 3:
     msg = f"\nmenu_item.name {name!r} has less than 3 characters. Is that correct?"
     print(msg)
-
 
 def validateRestaurantName(restaurant_name):
   if len(restaurant_name) < 3:
