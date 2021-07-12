@@ -4,7 +4,7 @@ import doltcli
 from validate_pks import *
 import sys
 
-relative_path_to_dolt_directory = "FILL_ME_IN"
+relative_path_to_dolt_directory = "../../../dolt/menus"
 db = doltcli.Dolt(relative_path_to_dolt_directory)
 
 def main():
