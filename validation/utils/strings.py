@@ -14,5 +14,5 @@ def validateString(colName, value):
     for char in invalid_chars:
         formatted = formatted.replace(char, " ").replace("  ", " ")
     if formatted != value:
-        print(f'UPDATE menu_items SET {colName!r} = {formatted!r} WHERE restaurant_name = {value!r}')
-        print(f'DELETE FROM menu_items WHERE {colName!r} = {value!r}')
+        print(f'UPDATE menu_items SET {colName} = {formatted!r} WHERE restaurant_name = {value!r}')
+        print(f'DELETE FROM menu_items WHERE {colName} = {value!r}')
