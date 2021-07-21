@@ -16,8 +16,11 @@ def validateString(colName, value):
         if char in formatted:
             if "exception" in dict and dict["exception"] in formatted: 
                 continue
+            if "replacement" in dict:
+                formatted = formatted.replace(char, dict["replacement"])
             else:
-                formatted = formatted.replace(char, " ").replace("  ", " ").strip()
+                formatted = formatted.replace(char, " ")
+    formatted = formatted.replace("  ", " ").strip()
     if formatted != value:
         print(f'UPDATE menu_items SET {colName} = {formatted!r} WHERE {colName} = {value!r}')
         print(f'DELETE FROM menu_items WHERE {colName} = {value!r}')
