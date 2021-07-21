@@ -11,8 +11,13 @@ def stringIsUppercase(s):
 
 def validateString(colName, value):
     formatted = value.strip().upper()
-    for char in invalid_chars:
-        formatted = formatted.replace(char, " ").replace("  ", " ")
+    for dict in invalid_chars:
+        char = dict["char"]
+        if char in formatted:
+            if "exception" in dict and dict["exception"] in formatted: 
+                continue
+            else:
+                formatted = formatted.replace(char, " ").replace("  ", " ").strip()
     if formatted != value:
-        print(f'UPDATE menu_items SET {colName} = {formatted!r} WHERE restaurant_name = {value!r}')
+        print(f'UPDATE menu_items SET {colName} = {formatted!r} WHERE {colName} = {value!r}')
         print(f'DELETE FROM menu_items WHERE {colName} = {value!r}')
